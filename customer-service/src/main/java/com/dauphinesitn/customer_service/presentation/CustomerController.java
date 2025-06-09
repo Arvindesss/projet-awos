@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -37,13 +38,15 @@ public class CustomerController {
     @PostMapping("/create")
     public ResponseEntity<CustomerDTO> createCustomer(@RequestBody CustomerDTO customerDTO) {
         Customer customer = customerService.createCustomer(customerDTO);
-        return ResponseEntity.ok(CustomerToCustomerDTOConverter.convert(customer));
+        return ResponseEntity.created(URI.create("/v1/customers/" + customer.getUuid()))
+                .body(CustomerToCustomerDTOConverter.convert(customer));
     }
 
     @PutMapping("/update")
     public ResponseEntity<CustomerDTO> updateCustomer(@RequestBody CustomerDTO customerDTO) {
         Customer customer = customerService.updateCustomer(customerDTO);
-        return ResponseEntity.ok(CustomerToCustomerDTOConverter.convert(customer));
+        return ResponseEntity.created(URI.create("/v1/customers/" + customer.getUuid()))
+                .body(CustomerToCustomerDTOConverter.convert(customer));
     }
 
     @DeleteMapping("/delete/{id}")
