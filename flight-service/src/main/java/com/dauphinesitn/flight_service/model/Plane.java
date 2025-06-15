@@ -2,8 +2,10 @@ package com.dauphinesitn.flight_service.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -20,6 +22,9 @@ public class Plane {
     private String model;
 
     private String manufacturer;
+
+    @OneToMany(mappedBy = "plane")
+    private List<Seat> seats;
 
     private int maxCapacity;
 

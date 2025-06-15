@@ -2,6 +2,8 @@ package com.dauphinesitn.flight_service.service.impl;
 
 import com.dauphinesitn.flight_service.dto.PlaneDTO;
 import com.dauphinesitn.flight_service.model.Plane;
+import com.dauphinesitn.flight_service.model.Seat;
+import com.dauphinesitn.flight_service.model.SeatId;
 import com.dauphinesitn.flight_service.repository.PlaneRepository;
 import com.dauphinesitn.flight_service.service.PlaneService;
 import lombok.AllArgsConstructor;
@@ -29,11 +31,18 @@ public class PlaneServiceImpl implements PlaneService {
 
     @Override
     public Plane createPlane(PlaneDTO planeDTO) {
+        List<Seat> seats = planeDTO.seats().stream()
+                .map(seatDTO -> Seat.builder()
+                        .seatId(new SeatId(planeDTO.planeId(), seatDTO.seatNumber()))
+                        .description(seatDTO.description())
+                        .build())
+                .toList();
         Plane newPlane = Plane.builder()
                 .planeId(UUID.randomUUID())
                 .model(planeDTO.model())
                 .manufacturer(planeDTO.manufacturer())
-                .maxCapacity(planeDTO.maxCapacity())
+                .seats(seats)
+                .maxCapacity(seats.size())
                 .maxBaggageWeight(planeDTO.maxBaggageWeight())
                 .build();
         return planeRepository.save(newPlane);
@@ -44,9 +53,17 @@ public class PlaneServiceImpl implements PlaneService {
         Plane existingPlane = planeRepository.findById(planeId)
                 .orElseThrow(() -> new IllegalArgumentException("Plane not found with ID: " + planeId));
 
+        List<Seat> seats = planeDTO.seats().stream()
+                .map(seatDTO -> Seat.builder()
+                        .seatId(new SeatId(planeDTO.planeId(), seatDTO.seatNumber()))
+                        .description(seatDTO.description())
+                        .build())
+                .toList();
+
         existingPlane.setModel(planeDTO.model());
         existingPlane.setManufacturer(planeDTO.manufacturer());
-        existingPlane.setMaxCapacity(planeDTO.maxCapacity());
+        existingPlane.setSeats(seats);
+        existingPlane.setMaxCapacity(seats.size());
         existingPlane.setMaxBaggageWeight(planeDTO.maxBaggageWeight());
 
         return planeRepository.save(existingPlane);
