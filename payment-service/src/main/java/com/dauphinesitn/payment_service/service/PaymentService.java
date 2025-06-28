@@ -10,6 +10,8 @@ public interface PaymentService {
 
     List<Payment> getAllPayments();
 
+    List<Payment> getAllPaymentsByYear(int year);
+
     Payment getPaymentById(UUID id);
 
     Payment createPayment(PaymentDTO payment);
