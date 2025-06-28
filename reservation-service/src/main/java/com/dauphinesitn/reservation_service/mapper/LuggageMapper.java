@@ -1,36 +1,36 @@
 package com.dauphinesitn.reservation_service.mapper;
 
-import com.dauphinesitn.reservation_service.dto.LuggageDTO;
-import com.dauphinesitn.reservation_service.model.Luggage;
+import com.dauphinesitn.reservation_service.dto.ReservedLuggageDTO;
+import com.dauphinesitn.reservation_service.model.ReservedLuggage;
 
 import java.util.List;
 
 public class LuggageMapper {
 
-    public static LuggageDTO toDto(Luggage luggage) {
-        LuggageDTO luggageDTO = LuggageDTO.builder()
-                .luggageId(luggage.getLuggageId())
-                .height(luggage.getHeight())
-                .weight(luggage.getWeight())
+    public static ReservedLuggageDTO toDto(ReservedLuggage reservedLuggage) {
+        ReservedLuggageDTO reservedLuggageDTO = ReservedLuggageDTO.builder()
+                .luggageId(reservedLuggage.getLuggageId())
+                .expectedMaxHeight(reservedLuggage.getExpectedMaxHeight())
+                .expectedMaxWeight(reservedLuggage.getExpectedMaxWeight())
                 .build();
-        return luggageDTO;
+        return reservedLuggageDTO;
     }
 
-    public static List<LuggageDTO> toDto(List<Luggage> luggage) {
-        return luggage.stream()
+    public static List<ReservedLuggageDTO> toDto(List<ReservedLuggage> reservedLuggage) {
+        return reservedLuggage.stream()
                 .map(LuggageMapper::toDto)
                 .toList();
     }
 
-    public static Luggage toEntity(LuggageDTO luggageDTO) {
-        return Luggage.builder()
-                .luggageId(luggageDTO.luggageId())
-                .height(luggageDTO.height())
-                .weight(luggageDTO.weight())
+    public static ReservedLuggage toEntity(ReservedLuggageDTO reservedLuggageDTO) {
+        return ReservedLuggage.builder()
+                .luggageId(reservedLuggageDTO.luggageId())
+                .expectedMaxHeight(reservedLuggageDTO.expectedMaxHeight())
+                .expectedMaxWeight(reservedLuggageDTO.expectedMaxWeight())
                 .build();
     }
 
-    public static List<Luggage> toEntity(List<LuggageDTO> luggages) {
+    public static List<ReservedLuggage> toEntity(List<ReservedLuggageDTO> luggages) {
         return luggages.stream()
                 .map(LuggageMapper::toEntity)
                 .toList();

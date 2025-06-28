@@ -14,7 +14,7 @@ public class ReservationMapper {
                 .flightId(reservation.getFlightId())
                 .price(PriceMapper.toDto(reservation.getPrice()))
                 .seatAvailability(SeatInventoryMapper.toDto(reservation.getSiegeAvailablity()))
-                .luggages(LuggageMapper.toDto(reservation.getLuggages()))
+                .luggages(LuggageMapper.toDto(reservation.getReservedLuggages()))
                 .build();
     }
 

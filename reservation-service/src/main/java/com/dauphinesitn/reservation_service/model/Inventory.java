@@ -23,5 +23,5 @@ public class Inventory {
     private List<SeatInventory> seatInventory;
 
     @OneToMany
-    private List<Luggage> luggages;
+    private List<ReservedLuggage> reservedLuggages;
 }
