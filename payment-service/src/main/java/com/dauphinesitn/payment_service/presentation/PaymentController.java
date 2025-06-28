@@ -6,10 +6,7 @@ import com.dauphinesitn.payment_service.model.Payment;
 import com.dauphinesitn.payment_service.service.PaymentService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -21,9 +18,17 @@ public class PaymentController {
 
     private final PaymentService paymentService;
 
+    @GetMapping("")
+    public ResponseEntity<List<PaymentDTO>> getAllPayments(@RequestParam(required = false) int year) {
+
+        List<Payment> payments = year <= 0
+                ? paymentService.getAllPayments()
+                : paymentService.getAllPaymentsByYear(year);
+        return ResponseEntity.ok(PaymentMapper.toDto(payments));
+    }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PaymentDTO> getPaymentById(UUID id) {
+    public ResponseEntity<PaymentDTO> getPaymentById(UUID id ) {
         Payment payment = paymentService.getPaymentById(id);
         return ResponseEntity.ok(PaymentMapper.toDto(payment));
     }
@@ -33,11 +38,4 @@ public class PaymentController {
         Payment payment = paymentService.payReservation(paymentDTO, reservationId);
         return ResponseEntity.ok(PaymentMapper.toDto(payment));
     }
-
-    @GetMapping("")
-    public ResponseEntity<List<PaymentDTO>> getAllPayments() {
-        List<Payment> payments = paymentService.getAllPayments();
-        return ResponseEntity.ok(PaymentMapper.toDto(payments));
-    }
-
 }

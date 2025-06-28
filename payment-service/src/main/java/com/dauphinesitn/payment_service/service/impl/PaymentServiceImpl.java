@@ -27,6 +27,11 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
+    public List<Payment> getAllPaymentsByYear(int year) {
+        return paymentRepository.findByYear(year);
+    }
+
+    @Override
     public Payment getPaymentById(UUID id) {
         return paymentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Payment not found with id: " + id));
