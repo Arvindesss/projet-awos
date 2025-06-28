@@ -12,7 +12,7 @@ public class CityToCityDTOConverter {
         return CityDTO.builder()
                 .uuid(city.getUuid())
                 .name(city.getName())
-                .country(city.getCountry())
+                .country(CountryToCountryDTOConverter.convert(city.getCountry()))
                 .build();
     }
 

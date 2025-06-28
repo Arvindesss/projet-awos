@@ -12,6 +12,8 @@ public interface ItineraryPricingService {
 
     ItineraryPricing getItineraryPricingById(UUID id);
 
+    ItineraryPricing getItineraryPricingByAirportIds(UUID arrivalAirportId, UUID departureAirportId);
+
     ItineraryPricing createItineraryPricing(ItineraryPricingDTO itineraryPricing);
 
     ItineraryPricing updateItineraryPricing(UUID id, ItineraryPricingDTO updatedPricing);

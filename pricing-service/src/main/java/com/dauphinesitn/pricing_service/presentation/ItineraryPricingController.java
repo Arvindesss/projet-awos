@@ -30,6 +30,13 @@ public class ItineraryPricingController {
         return ResponseEntity.ok(ItineraryPricingMapper.toDTO(itineraryPricing));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ItineraryPricingDTO> getItineraryPricingByAirportIds(@RequestBody ItineraryPricingDTO itineraryPricingDTO) {
+        ItineraryPricing itineraryPricing = itineraryPricingService.getItineraryPricingByAirportIds(itineraryPricingDTO.arrivalAirportId(), itineraryPricingDTO.departureAirportId());
+        return ResponseEntity.ok(ItineraryPricingMapper.toDTO(itineraryPricing));
+    }
+
+
     @PostMapping("/create")
     public ResponseEntity<ItineraryPricingDTO> createItineraryPricing(@RequestBody ItineraryPricingDTO itineraryPricingDTO) {
         ItineraryPricing createdItineraryPricing = itineraryPricingService.createItineraryPricing(itineraryPricingDTO);
