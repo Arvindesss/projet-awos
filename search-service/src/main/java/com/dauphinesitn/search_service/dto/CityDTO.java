@@ -1,4 +1,4 @@
-package com.dauphinesitn.location_service.dto;
+package com.dauphinesitn.search_service.dto;
 
 import lombok.Builder;
 
