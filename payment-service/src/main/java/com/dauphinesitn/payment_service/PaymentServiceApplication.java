@@ -1,4 +1,4 @@
-package com.dauphinesitn.flight_access_service;
+package com.dauphinesitn.payment_service;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import org.springframework.boot.SpringApplication;
@@ -8,10 +8,10 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @SpringBootApplication
 @OpenAPIDefinition
 @EnableDiscoveryClient
-public class FlightAccessServiceApplication {
+public class PaymentServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(FlightAccessServiceApplication.class, args);
+		SpringApplication.run(PaymentServiceApplication.class, args);
 	}
 
 }
