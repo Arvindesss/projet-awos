@@ -1,4 +1,4 @@
-package com.dauphinesitn.payment_service.dto;
+package com.dauphinesitn.back_office_service.dto;
 
 import lombok.Builder;
 
