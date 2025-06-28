@@ -1,9 +1,6 @@
 package com.dauphinesitn.reservation_service.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
@@ -24,11 +21,12 @@ public class Reservation {
 
     private UUID flightId;
 
+    @Embedded
     private Price price;
 
     @OneToOne
     private SeatInventory siegeAvailablity;
 
-    @OneToMany(mappedBy = "reservationId")
-    private List<Luggage> luggages;
+    @OneToMany(mappedBy = "reservation")
+    private List<ReservedLuggage> reservedLuggages;
 }

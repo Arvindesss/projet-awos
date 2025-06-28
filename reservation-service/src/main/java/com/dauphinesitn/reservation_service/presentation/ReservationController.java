@@ -26,13 +26,13 @@ public class ReservationController {
     }
 
     @GetMapping("/{reservationId}")
-    public ResponseEntity<ReservationDTO> getReservationById(UUID reservationId) {
+    public ResponseEntity<ReservationDTO> getReservationById(@PathVariable UUID reservationId) {
         Reservation reservation = reservationService.getReservationById(reservationId);
         return ResponseEntity.ok(ReservationMapper.toDto(reservation));
     }
 
     @PostMapping("/create")
-    public ResponseEntity<ReservationDTO> createReservation(ReservationDTO reservationDTO) {
+    public ResponseEntity<ReservationDTO> createReservation(@RequestBody ReservationDTO reservationDTO) {
         Reservation reservation = reservationService.createReservation(reservationDTO);
         return ResponseEntity.created(URI.create("/v1/reservations/" + reservation.getReservationId()))
                 .body(ReservationMapper.toDto(reservation));

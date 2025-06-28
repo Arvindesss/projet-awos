@@ -3,7 +3,6 @@ package com.dauphinesitn.reservation_service.service.impl;
 import com.dauphinesitn.reservation_service.dto.ReservationDTO;
 import com.dauphinesitn.reservation_service.mapper.PriceMapper;
 import com.dauphinesitn.reservation_service.mapper.SeatInventoryMapper;
-import com.dauphinesitn.reservation_service.model.Price;
 import com.dauphinesitn.reservation_service.model.Reservation;
 import com.dauphinesitn.reservation_service.repository.ReservationRepository;
 import com.dauphinesitn.reservation_service.service.ReservationService;

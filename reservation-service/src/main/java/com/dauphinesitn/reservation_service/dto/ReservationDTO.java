@@ -1,6 +1,5 @@
 package com.dauphinesitn.reservation_service.dto;
 
-import com.dauphinesitn.reservation_service.model.SeatInventory;
 import lombok.Builder;
 
 import java.util.List;
@@ -12,5 +11,5 @@ public record ReservationDTO(UUID reservationId,
                              UUID flightId,
                              PriceDTO price,
                              SeatInventoryDTO seatAvailability,
-                             List<LuggageDTO> luggages) {
+                             List<ReservedLuggageDTO> luggages) {
 }
