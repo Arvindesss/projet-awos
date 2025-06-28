@@ -1,9 +1,9 @@
 package com.dauphinesitn.customer_service.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -22,4 +22,7 @@ public class Customer {
     private String surname;
 
     private String email;
+
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
+    private CardId cardId;
 }

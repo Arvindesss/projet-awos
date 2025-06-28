@@ -10,6 +10,8 @@ public interface CustomerService {
 
     Customer getCustomerById(UUID uuid);
 
+    Customer getCustomerByCardId(UUID cardId);
+
     List<Customer> getAllCustomers();
 
     Customer createCustomer(CustomerDTO customerDTO);

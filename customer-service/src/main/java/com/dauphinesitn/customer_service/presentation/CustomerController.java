@@ -26,6 +26,12 @@ public class CustomerController {
         return ResponseEntity.ok(CustomerToCustomerDTOConverter.convert(customer));
     }
 
+    @GetMapping("/card/{cardId}")
+    public ResponseEntity<CustomerDTO> getCustomerByCardId(@PathVariable UUID cardId) {
+        Customer customer = customerService.getCustomerByCardId(cardId);
+        return ResponseEntity.ok(CustomerToCustomerDTOConverter.convert(customer));
+    }
+
     @GetMapping("")
     public ResponseEntity<List<CustomerDTO>> getAllCustomers() {
         List<Customer> customers = customerService.getAllCustomers();
