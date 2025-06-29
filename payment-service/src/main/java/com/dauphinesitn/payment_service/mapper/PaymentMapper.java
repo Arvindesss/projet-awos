@@ -11,6 +11,7 @@ public class PaymentMapper {
         return PaymentDTO.builder()
                 .paymentId(payment.getPaymentId())
                 .customerId(payment.getCustomerId())
+                .description(payment.getDescription())
                 .amount(payment.getAmount())
                 .currency(payment.getCurrency())
                 .build();

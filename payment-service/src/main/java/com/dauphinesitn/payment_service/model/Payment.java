@@ -21,6 +21,8 @@ public class Payment {
 
     private UUID customerId;
 
+    private String description;
+
     private double amount;
 
     private String currency;

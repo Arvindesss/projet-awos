@@ -1,6 +1,9 @@
 package com.dauphinesitn.payment_service.service.impl;
 
+import com.dauphinesitn.payment_service.client.ReservationClient;
 import com.dauphinesitn.payment_service.dto.PaymentDTO;
+import com.dauphinesitn.payment_service.dto.ReservationDTO;
+import com.dauphinesitn.payment_service.dto.queryparam.UpdateReservationStatusRequestBody;
 import com.dauphinesitn.payment_service.model.Payment;
 import com.dauphinesitn.payment_service.repository.PaymentRepository;
 import com.dauphinesitn.payment_service.service.PaymentService;
@@ -15,6 +18,8 @@ import java.util.UUID;
 public class PaymentServiceImpl implements PaymentService {
 
     private PaymentRepository paymentRepository;
+
+    private ReservationClient reservationClient;
 
     @Override
     public List<Payment> getAllPayments() {
@@ -33,12 +38,22 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public Payment createPayment(PaymentDTO payment) {
+    public Payment payReservation(PaymentDTO paymentDTO, UUID reservationId) {
+        //Check if reservation exists
+        reservationClient.getReservationById(reservationId).getBody();
+
+        //Create payment
         Payment newPayment = Payment.builder()
                 .paymentId(UUID.randomUUID())
-                .customerId(payment.customerId())
-                .amount(payment.amount())
+                .customerId(paymentDTO.customerId())
+                .description("Payment for reservation " + reservationId)
+                .amount(paymentDTO.amount())
                 .build();
+
+        reservationClient.updateReservationStatus(reservationId, UpdateReservationStatusRequestBody.builder()
+                .status(ReservationDTO.Status.CONFIRMED)
+                .build());
+
         return paymentRepository.save(newPayment);
     }
 }

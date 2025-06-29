@@ -33,9 +33,9 @@ public class PaymentController {
         return ResponseEntity.ok(PaymentMapper.toDto(payment));
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<PaymentDTO> createPayment(PaymentDTO paymentDTO) {
-        Payment payment = paymentService.createPayment(paymentDTO);
+    @PostMapping("/pay-reservation/{reservationId}")
+    public ResponseEntity<PaymentDTO> payReservation(@PathVariable UUID reservationId, @RequestBody PaymentDTO paymentDTO) {
+        Payment payment = paymentService.payReservation(paymentDTO, reservationId);
         return ResponseEntity.ok(PaymentMapper.toDto(payment));
     }
 }
