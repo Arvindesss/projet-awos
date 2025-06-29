@@ -1,23 +1,16 @@
 package com.dauphinesitn.search_service.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Builder;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class FlightSearchResult {
+@Builder
+public record FlightSearchResult(UUID flightId,
+                                PlaneDTO plane,
+                                AirportDTO departureAirport,
+                                AirportDTO arrivalAirport,
+                                LocalDateTime departureTime,
+                                LocalDateTime arrivalTime) {
 
-    private UUID flightId;
-
-    private PlaneDTO plane;
-
-    private AirportDTO departureAirport;
-
-    private AirportDTO arrivalAirport;
-
-    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
-    private LocalDateTime departureTime;
-
-    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
-    private LocalDateTime arrivalTime;
 }
