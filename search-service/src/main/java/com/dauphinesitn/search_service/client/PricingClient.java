@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient(name = "pricing-service")
 public interface PricingClient {
 
-    @GetMapping("/v1/pricing/itinerary-pricings")
+    @GetMapping("/v1/pricing/itinerary-pricings/airport-ids")
     ResponseEntity<ItineraryPricingDTO> getItineraryPricingByAirportIds(@RequestBody ItineraryPricingDTO itineraryPricingDTO);
 
 }
