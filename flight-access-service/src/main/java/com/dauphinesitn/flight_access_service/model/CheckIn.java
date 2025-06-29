@@ -30,7 +30,7 @@ public class CheckIn {
 
     private UUID seatInventoryId;
 
-    @OneToMany(mappedBy = "checkInId")
+    @OneToMany(mappedBy = "luggageId")
     private List<CheckInLuggage> luggages;
 
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm")

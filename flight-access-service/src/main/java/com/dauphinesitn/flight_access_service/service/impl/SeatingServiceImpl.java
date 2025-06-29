@@ -1,6 +1,6 @@
 package com.dauphinesitn.flight_access_service.service.impl;
 
-import com.dauphinesitn.flight_access_service.client.InventoryClient;
+import com.dauphinesitn.flight_access_service.client.ReservationClient;
 import com.dauphinesitn.flight_access_service.dto.InventoryDTO;
 import com.dauphinesitn.flight_access_service.dto.SeatInventoryDTO;
 import com.dauphinesitn.flight_access_service.dto.SeatingDTO;
@@ -14,7 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class SeatingServiceImpl implements SeatingService {
 
-    private InventoryClient inventoryClient;
+    private ReservationClient inventoryClient;
 
     @Override
     public InventoryDTO assignSeat(SeatingDTO seatingDTO) {
