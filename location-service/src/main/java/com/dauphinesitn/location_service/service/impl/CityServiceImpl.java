@@ -1,6 +1,7 @@
 package com.dauphinesitn.location_service.service.impl;
 
 import com.dauphinesitn.location_service.dto.CityDTO;
+import com.dauphinesitn.location_service.mapper.CountryMapper;
 import com.dauphinesitn.location_service.model.City;
 import com.dauphinesitn.location_service.model.Country;
 import com.dauphinesitn.location_service.repository.CityRepository;
@@ -56,7 +57,7 @@ public class CityServiceImpl implements CityService {
                 .uuid(UUID.randomUUID())
                 .name(cityDTO.name())
                 .postalCode(cityDTO.postalCode())
-                .country(cityDTO.country())
+                .country(CountryMapper.toEntity(cityDTO.country()))
                 .build();
         return cityRepository.save(city);
     }

@@ -1,7 +1,7 @@
 package com.dauphinesitn.location_service.presentation;
 
 import com.dauphinesitn.location_service.dto.AirportDTO;
-import com.dauphinesitn.location_service.dto.converter.AirportToAirportDTOConverter;
+import com.dauphinesitn.location_service.mapper.AirportMapper;
 import com.dauphinesitn.location_service.model.Airport;
 import com.dauphinesitn.location_service.service.AirportService;
 import lombok.AllArgsConstructor;
@@ -23,31 +23,31 @@ public class AirportController {
     @RequestMapping("/{id}")
     public ResponseEntity<AirportDTO> getAirportById(@PathVariable UUID id) {
         Airport airport = airportService.getAirportById(id);
-        return ResponseEntity.ok(AirportToAirportDTOConverter.convert(airport));
+        return ResponseEntity.ok(AirportMapper.toDTO(airport));
     }
     @RequestMapping("/{name}")
     public ResponseEntity<AirportDTO> getAirportByName(@PathVariable String name) {
         Airport airport = airportService.getAirportByName(name);
-        return ResponseEntity.ok(AirportToAirportDTOConverter.convert(airport));
+        return ResponseEntity.ok(AirportMapper.toDTO(airport));
     }
 
     @RequestMapping("/create")
     public ResponseEntity<AirportDTO> createAirport(AirportDTO airportDTO) {
         Airport airport = airportService.createAirport(airportDTO);
         return ResponseEntity.created(URI.create("/v1/airports/" + airport.getAirportId()))
-                .body(AirportToAirportDTOConverter.convert(airport));
+                .body(AirportMapper.toDTO(airport));
     }
 
     @RequestMapping("/update")
     public ResponseEntity<AirportDTO> updateAirport(@PathVariable UUID id, AirportDTO airportDTO) {
         Airport airport = airportService.updateAirport(id, airportDTO);
         return ResponseEntity.created(URI.create("/v1/airports/" + airport.getAirportId()))
-                .body(AirportToAirportDTOConverter.convert(airport));
+                .body(AirportMapper.toDTO(airport));
     }
 
     @RequestMapping("/delete/{id}")
     public ResponseEntity<AirportDTO> deleteAirport(@PathVariable UUID id) {
         Airport airport = airportService.deleteAirport(id);
-        return ResponseEntity.ok(AirportToAirportDTOConverter.convert(airport));
+        return ResponseEntity.ok(AirportMapper.toDTO(airport));
     }
 }

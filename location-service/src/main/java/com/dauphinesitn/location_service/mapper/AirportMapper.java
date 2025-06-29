@@ -1,11 +1,11 @@
-package com.dauphinesitn.location_service.dto.converter;
+package com.dauphinesitn.location_service.mapper;
 
 import com.dauphinesitn.location_service.dto.AirportDTO;
 import com.dauphinesitn.location_service.model.Airport;
 
-public class AirportToAirportDTOConverter {
+public class AirportMapper {
 
-    public static AirportDTO convert(Airport airport){
+    public static AirportDTO toDTO(Airport airport){
         return AirportDTO.builder()
                 .airportId(airport.getAirportId())
                 .name(airport.getName())
