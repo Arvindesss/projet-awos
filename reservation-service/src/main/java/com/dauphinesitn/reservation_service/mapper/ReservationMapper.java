@@ -12,9 +12,10 @@ public class ReservationMapper {
                 .reservationId(reservation.getReservationId())
                 .customerId(reservation.getCustomerId())
                 .flightId(reservation.getFlightId())
-                .price(PriceMapper.toDto(reservation.getPrice()))
-                .seatAvailability(SeatInventoryMapper.toDto(reservation.getSiegeAvailablity()))
-                .luggages(LuggageMapper.toDto(reservation.getReservedLuggages()))
+                .price(reservation.getPrice())
+                .currency(reservation.getCurrency())
+                .seatNumber(reservation.getReservedSeatNumber())
+                .status(ReservationDTO.Status.valueOf(reservation.getStatus().name()))
                 .build();
     }
 

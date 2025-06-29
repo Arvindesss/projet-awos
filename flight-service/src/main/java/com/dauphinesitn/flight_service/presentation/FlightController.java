@@ -26,7 +26,7 @@ public class FlightController {
     }
 
     @GetMapping("/{flightId}")
-    public ResponseEntity<FlightDTO> getFlightById(UUID flightId) {
+    public ResponseEntity<FlightDTO> getFlightById(@PathVariable UUID flightId) {
         Flight flight = flightService.getFlightById(flightId);
         return ResponseEntity.ok(FlightToFlightDTOConverter.convert(flight));
     }

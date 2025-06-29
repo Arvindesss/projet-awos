@@ -1,6 +1,7 @@
 package com.dauphinesitn.reservation_service.presentation;
 
 import com.dauphinesitn.reservation_service.dto.ReservationDTO;
+import com.dauphinesitn.reservation_service.dto.queryparam.UpdateReservationStatusRequestBody;
 import com.dauphinesitn.reservation_service.mapper.ReservationMapper;
 import com.dauphinesitn.reservation_service.model.Reservation;
 import com.dauphinesitn.reservation_service.service.ReservationService;
@@ -39,10 +40,18 @@ public class ReservationController {
     }
 
     @PutMapping("/update/{reservationId}")
-    public ResponseEntity<ReservationDTO> updateReservation(@PathVariable UUID reservationId, @RequestBody Reservation reservation) {
+    public ResponseEntity<ReservationDTO> updateReservation(@PathVariable UUID reservationId, @RequestBody ReservationDTO reservation) {
         Reservation updatedReservation = reservationService.updateReservation(reservationId, reservation);
         return ResponseEntity.ok(ReservationMapper.toDto(updatedReservation));
     }
+
+    @PatchMapping("/update-status/{reservationId}")
+    public ResponseEntity<ReservationDTO> updateReservationStatus(@PathVariable UUID reservationId,
+                                                                  @RequestBody UpdateReservationStatusRequestBody requestBody) {
+        Reservation updatedReservation = reservationService.updateReservationStatus(reservationId, requestBody.status());
+        return ResponseEntity.ok(ReservationMapper.toDto(updatedReservation));
+    }
+
 
     @DeleteMapping("/delete/{reservationId}")
     public ResponseEntity<ReservationDTO> deleteReservation(@PathVariable UUID reservationId) {

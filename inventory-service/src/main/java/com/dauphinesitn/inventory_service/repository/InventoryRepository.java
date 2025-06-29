@@ -1,6 +1,6 @@
-package com.dauphinesitn.reservation_service.repository;
+package com.dauphinesitn.inventory_service.repository;
 
-import com.dauphinesitn.reservation_service.model.Inventory;
+import com.dauphinesitn.inventory_service.model.Inventory;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
