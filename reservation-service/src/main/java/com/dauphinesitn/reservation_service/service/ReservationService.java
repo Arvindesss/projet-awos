@@ -14,7 +14,9 @@ public interface ReservationService {
 
     Reservation createReservation(ReservationDTO reservation);
 
-    Reservation updateReservation(UUID reservationId, Reservation reservation);
+    Reservation updateReservation(UUID reservationId, ReservationDTO reservation);
+
+    Reservation updateReservationStatus(UUID reservationId, ReservationDTO.Status status);
 
     Reservation deleteReservation(UUID reservationId);
 }

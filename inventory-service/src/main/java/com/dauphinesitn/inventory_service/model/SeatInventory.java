@@ -1,4 +1,4 @@
-package com.dauphinesitn.reservation_service.model;
+package com.dauphinesitn.inventory_service.model;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;

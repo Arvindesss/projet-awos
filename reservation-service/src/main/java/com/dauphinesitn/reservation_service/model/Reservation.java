@@ -3,7 +3,6 @@ package com.dauphinesitn.reservation_service.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -21,12 +20,18 @@ public class Reservation {
 
     private UUID flightId;
 
-    @Embedded
-    private Price price;
+    private double price;
 
-    @OneToOne
-    private SeatInventory siegeAvailablity;
+    private String currency;
 
-    @OneToMany(mappedBy = "reservation")
-    private List<ReservedLuggage> reservedLuggages;
+    private String reservedSeatNumber;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    public enum Status {
+        PENDING,
+        CONFIRMED,
+        CANCELLED
+    }
 }

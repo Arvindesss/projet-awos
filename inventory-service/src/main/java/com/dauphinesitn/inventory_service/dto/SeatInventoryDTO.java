@@ -1,7 +1,6 @@
-package com.dauphinesitn.reservation_service.dto;
+package com.dauphinesitn.inventory_service.dto;
 
-import jakarta.persistence.Entity;
-import lombok.*;
+import lombok.Builder;
 
 import java.util.UUID;
 

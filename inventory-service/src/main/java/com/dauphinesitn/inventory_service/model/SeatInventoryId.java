@@ -1,4 +1,4 @@
-package com.dauphinesitn.reservation_service.model;
+package com.dauphinesitn.inventory_service.model;
 
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
@@ -13,7 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class SeatInventoryId {
 
-    private UUID seatId;
-
     private UUID flightId;
+
+    private String seatNumber;
 }

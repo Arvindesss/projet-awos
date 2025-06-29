@@ -1,4 +1,4 @@
-package com.dauphinesitn.reservation_service.model;
+package com.dauphinesitn.inventory_service.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -21,7 +21,4 @@ public class Inventory {
 
     @OneToMany
     private List<SeatInventory> seatInventory;
-
-    @OneToMany
-    private List<ReservedLuggage> reservedLuggages;
 }
