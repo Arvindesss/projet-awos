@@ -22,4 +22,6 @@ public class ItineraryPricing {
     private UUID arrivalAirportId;
 
     private double price;
+
+    private String currency;
 }

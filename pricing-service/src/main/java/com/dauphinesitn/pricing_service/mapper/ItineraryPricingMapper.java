@@ -13,6 +13,7 @@ public class ItineraryPricingMapper {
                 .departureAirportId(itineraryPricing.getDepartureAirportId())
                 .arrivalAirportId(itineraryPricing.getArrivalAirportId())
                 .price(itineraryPricing.getPrice())
+               .currency(itineraryPricing.getCurrency())
                 .build();
     }
 
