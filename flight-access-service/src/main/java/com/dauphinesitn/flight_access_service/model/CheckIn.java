@@ -28,9 +28,9 @@ public class CheckIn {
 
     private UUID reservationId;
 
-    private UUID seatInventoryId;
+    private String seatNumber;
 
-    @OneToMany(mappedBy = "luggageId")
+    @OneToMany(mappedBy = "checkIn")
     private List<CheckInLuggage> luggages;
 
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm")

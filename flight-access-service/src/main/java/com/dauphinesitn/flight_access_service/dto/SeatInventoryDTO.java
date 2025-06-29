@@ -6,7 +6,7 @@ import java.util.UUID;
 
 @Builder
 public record SeatInventoryDTO(
-        UUID seatId,
         UUID flightId,
+        String seatNumber,
         boolean isAvailable) {
 }

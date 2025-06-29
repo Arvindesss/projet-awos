@@ -22,11 +22,4 @@ public class SeatingController {
         return ResponseEntity.ok().build();
     }
 
-    @PatchMapping("/deassign-seat/")
-    public ResponseEntity<Void> deassignSeat(@RequestBody SeatingDTO seatingDTO) {
-        seatingService.deassignSeat(seatingDTO);
-        return ResponseEntity.ok().build();
-    }
-
-
 }

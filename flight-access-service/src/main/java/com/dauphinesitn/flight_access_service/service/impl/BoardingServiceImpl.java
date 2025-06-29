@@ -28,8 +28,6 @@ public class BoardingServiceImpl implements BoardingService {
 
     private final ReservationClient reservationClient;
 
-
-
     @Override
     public List<Boarding> getAllBoardings() {
         return boardingRepository.findAll();

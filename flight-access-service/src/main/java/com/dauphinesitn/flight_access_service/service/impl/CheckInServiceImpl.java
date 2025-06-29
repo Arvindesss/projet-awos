@@ -8,9 +8,11 @@ import com.dauphinesitn.flight_access_service.model.CheckInLuggage;
 import com.dauphinesitn.flight_access_service.repository.CheckInRepository;
 import com.dauphinesitn.flight_access_service.service.CheckInService;
 
+import com.dauphinesitn.flight_access_service.service.SeatingService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,6 +21,8 @@ import java.util.UUID;
 public class CheckInServiceImpl implements CheckInService {
 
     private final CheckInRepository checkInRepository;
+
+    private final SeatingService seatingService;
 
     private final CustomerClient customerClient;
 
@@ -39,28 +43,34 @@ public class CheckInServiceImpl implements CheckInService {
     public CheckIn createCheckIn(CheckInDTO checkIn) {
         CustomerDTO customer =  customerClient.getCustomerByCardId(checkIn.cardId());
         ReservationDTO reservation = reservationClient.getReservationById(checkIn.reservationId());
-        if(checkIn.luggages().size() > reservation.luggages().size()) {
-            throw new IllegalArgumentException("Number of luggage exceeds the reservation limit.");
+        if(!reservation.status().equals(ReservationDTO.Status.CONFIRMED)) {
+            throw new RuntimeException("Cannot create check-in for a reservation that is not confirmed.");
         }
-        if(checkIn.luggages().stream().mapToDouble(CheckInLuggageDTO::weight).sum() >
-                reservation.luggages().stream().mapToDouble(LuggageDTO::expectedMaxWeight).sum() ) {
-            throw new IllegalArgumentException("Total luggage weight exceeds the expected amount.");
+        String seatNumber = reservation.seatNumber();
+        if(seatNumber.isEmpty() || seatNumber.isBlank()) {
+            SeatingDTO seatingDTO = SeatingDTO.builder()
+                    .flightId(reservation.flightId())
+                    .customerId(checkIn.customerId())
+                    .build();
+           seatNumber = seatingService.assignSeat(seatingDTO);
         }
-        List<CheckInLuggage> luggages = checkIn.luggages().stream()
-                .map(luggage -> CheckInLuggage.builder()
-                        .luggageId(UUID.randomUUID())
-                        .reservationId(checkIn.reservationId())
-                        .height(luggage.height())
-                        .weight(luggage.weight())
-                        .build())
-                .toList();
         CheckIn newCheckIn = CheckIn.builder()
                 .checkInId(UUID.randomUUID())
                 .cardId(checkIn.cardId())
                 .customerId(customer.customerId())
                 .reservationId(checkIn.reservationId())
-                .luggages(luggages)
+                .seatNumber(seatNumber)
+                .checkInTime(LocalDateTime.now())
                 .build();
+        List<CheckInLuggage> luggages = checkIn.luggages().stream()
+                .map(luggage -> CheckInLuggage.builder()
+                        .luggageId(UUID.randomUUID())
+                        .checkIn(newCheckIn)
+                        .height(luggage.height())
+                        .weight(luggage.weight())
+                        .build())
+                .toList();
+        newCheckIn.setLuggages(luggages);
         return checkInRepository.save(newCheckIn);
     }
 
