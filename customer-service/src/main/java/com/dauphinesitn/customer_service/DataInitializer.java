@@ -23,14 +23,14 @@ public class DataInitializer {
     public void init() {
         // Création d'un Customer avec CardId
 
-        UUID customerUuid = UUID.fromString("d56c4690-bb7c-45ec-8db8-7545702b259c");
-        UUID cardUuid = UUID.fromString("a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6");
+        UUID customerUuid = UUID.fromString("11111111-1111-1111-1111-111111111111");
+        UUID cardUuid = UUID.fromString("11111111-1111-1111-1111-111111111111");
 
         Customer customer = Customer.builder()
-                .uuid(customerUuid)
-                .firstname("Alice")
+                .customerId(customerUuid)
+                .firstname("Isco")
                 .surname("Dupont")
-                .email("alice.dupont@example.com")
+                .email("isco.dupont@example.com")
                 .build();
 
         CardId cardId = CardId.builder()
@@ -44,6 +44,26 @@ public class DataInitializer {
         // Sauvegarde via customerRepository
         customerRepository.save(customer);
 
-        // Grâce au cascade ALL, CardId sera aussi persisté automatiquement
+
+        UUID customerUuid2 = UUID.fromString("22222222-2222-2222-2222-222222222222");
+        UUID cardUuid2 = UUID.fromString("22222222-2222-2222-2222-222222222222");
+
+        Customer customer2 = Customer.builder()
+                .customerId(customerUuid2)
+                .firstname("Alice")
+                .surname("Dupont")
+                .email("alice.dupont@example.com")
+                .build();
+
+        CardId cardId2 = CardId.builder()
+                .cardId(cardUuid2)
+                .customer(customer2)  // liaison vers customer
+                .build();
+
+        // Affecter le CardId au Customer (important pour la bidirection)
+        customer2.setCardId(cardId2);
+
+        // Sauvegarde via customerRepository
+        customerRepository.save(customer2);
     }
 }

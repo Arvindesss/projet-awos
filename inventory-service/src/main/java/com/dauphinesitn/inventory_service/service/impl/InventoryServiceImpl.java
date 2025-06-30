@@ -35,26 +35,26 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-    public Inventory updateSeatAvailability(UUID flightId, SeatInventoryDTO seatInventoryDTO) {
-        Inventory existingInventory = inventoryRepository.findById(flightId)
-                .orElseThrow(() -> new IllegalArgumentException("Inventory not found for flight ID: " + flightId));
+    public Inventory updateSeatAvailability(SeatInventoryDTO seatInventoryDTO) {
+        Inventory existingInventory = inventoryRepository.findById(seatInventoryDTO.flightId())
+                .orElseThrow(() -> new IllegalArgumentException("Inventory not found for flight ID: " + seatInventoryDTO.flightId()));
         SeatInventory seatInventory = existingInventory.getSeatInventory().stream().
                 filter(seat -> seat.getSeatInventoryId().getSeatNumber().equals(seatInventoryDTO.seatNumber()))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Seat not found in inventory: " + seatInventoryDTO.seatNumber()));
-        seatInventory.setAvailable(!seatInventory.isAvailable());
+        seatInventory.setAvailable(seatInventoryDTO.isAvailable());
         return inventoryRepository.save(existingInventory);
     }
 
     @Override
-    public Inventory createInventory(InventoryDTO inventory) {
-        FlightDTO flightDTO = flightClient.getFlightById(inventory.flightId()).getBody();
+    public Inventory createInventory(UUID flightId) {
+        FlightDTO flightDTO = flightClient.getFlightById(flightId).getBody();
         List<SeatDTO> seatDTOs = flightDTO.plane().seats();
-        List<SeatInventory> seatInventories = SeatInventoryMapper.convertPlaneSeats(seatDTOs, inventory.flightId());
         Inventory newInventory = Inventory.builder()
-                .flightId(inventory.flightId())
-                .seatInventory(seatInventories)
+                .flightId(flightId)
                 .build();
+        List<SeatInventory> seatInventories = SeatInventoryMapper.convertPlaneSeats(seatDTOs, flightId, newInventory);
+        newInventory.setSeatInventory(seatInventories);
         return inventoryRepository.save(newInventory);
     }
 

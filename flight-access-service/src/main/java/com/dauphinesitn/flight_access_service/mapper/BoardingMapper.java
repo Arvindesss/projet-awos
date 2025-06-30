@@ -9,8 +9,10 @@ public class BoardingMapper {
     public static BoardingDTO toDTO(Boarding boarding) {
         return BoardingDTO.builder()
                 .boardingId(boarding.getBoardingId())
+                .cardId(boarding.getCardId())
                 .customerId(boarding.getCustomerId())
                 .reservationId(boarding.getReservationId())
+                .checkIn(CheckInMapper.toDTO(boarding.getCheckIn()))
                 .boardingTime(boarding.getBoardingTime())
                 .build();
     }
@@ -19,14 +21,5 @@ public class BoardingMapper {
         return checkIn.stream()
                 .map(BoardingMapper::toDTO)
                 .toList();
-    }
-
-    public static Boarding toEntity(BoardingDTO boardingDTO) {
-        return Boarding.builder()
-                .boardingId(boardingDTO.boardingId())
-                .customerId(boardingDTO.customerId())
-                .reservationId(boardingDTO.reservationId())
-                .boardingTime(boardingDTO.boardingTime())
-                .build();
     }
 }

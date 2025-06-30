@@ -26,18 +26,18 @@ public class CountryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CountryDTO> getCountryById(UUID id) {
+    public ResponseEntity<CountryDTO> getCountryById(@PathVariable UUID id) {
         Country country = countryService.getCountryById(id);
         return ResponseEntity.ok(CountryMapper.toDTO(country));
     }
 
-    @GetMapping("/{countryName}")
-    public ResponseEntity<CountryDTO> getCountryByName(@PathVariable String countryName) {
+    @GetMapping("/name")
+    public ResponseEntity<CountryDTO> getCountryByName(@RequestParam String countryName) {
         Country country = countryService.getCountryByName(countryName);
         return ResponseEntity.ok(CountryMapper.toDTO(country));
     }
 
-    @GetMapping("/create")
+    @PostMapping("/create")
     public ResponseEntity<CountryDTO> createCountry(@RequestBody CountryDTO countryDTO) {
         Country createdCountry = countryService.createCountry(countryDTO);
         return ResponseEntity.created(URI.create("/v1/countries/" + createdCountry.getUuid())).body(CountryMapper.toDTO(createdCountry));

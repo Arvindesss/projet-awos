@@ -1,9 +1,6 @@
 package com.dauphinesitn.location_service.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.UUID;
@@ -19,13 +16,10 @@ public class Airport {
     @Id
     private UUID airportId;
 
+    @Column(unique = true)
     private String name;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "city_id")
     private City city;
-
-    @OneToOne
-    @JoinColumn(name = "country_id")
-    private Country country;
 }

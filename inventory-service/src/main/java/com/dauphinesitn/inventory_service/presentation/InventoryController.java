@@ -21,7 +21,7 @@ public class InventoryController {
 
     private final InventoryService inventoryService;
 
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity<List<InventoryAvailabilityDTO>> getAllInventory() {
         List<Inventory> inventoryList = inventoryService.getAllInventory();
         return ResponseEntity.ok(InventoryMapper.toAvailabilityDto(inventoryList));
@@ -33,15 +33,15 @@ public class InventoryController {
         return ResponseEntity.ok(InventoryMapper.toAvailabilityDto(inventory));
     }
 
-    @PatchMapping("/update-seat-availability")
-    public ResponseEntity<InventoryAvailabilityDTO> updateSeatAvailability(@PathVariable UUID flightId, @RequestBody SeatInventoryDTO seatInventoryDTO) {
-        Inventory updatedInventory = inventoryService.updateSeatAvailability(flightId, seatInventoryDTO);
+    @PutMapping("/update-seat-availability")
+    public ResponseEntity<InventoryAvailabilityDTO> updateSeatAvailability(@RequestBody SeatInventoryDTO seatInventoryDTO) {
+        Inventory updatedInventory = inventoryService.updateSeatAvailability(seatInventoryDTO);
         return ResponseEntity.ok(InventoryMapper.toAvailabilityDto(updatedInventory));
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<InventoryAvailabilityDTO> createInventory(@RequestBody InventoryDTO inventoryDTO) {
-        Inventory createdInventory = inventoryService.createInventory(inventoryDTO);
+    @PostMapping("/create/{flightId}")
+    public ResponseEntity<InventoryAvailabilityDTO> createInventory(@PathVariable UUID flightId) {
+        Inventory createdInventory = inventoryService.createInventory(flightId);
         return ResponseEntity.ok(InventoryMapper.toAvailabilityDto(createdInventory));
     }
 

@@ -27,27 +27,56 @@ public class DataInitializer {
     public void init() {
         // Pays
         Country france = countryRepository.save(Country.builder()
-                .uuid(UUID.randomUUID())
+                .uuid(UUID.fromString("11111111-1111-1111-1111-111111111111"))
                 .name("France")
                 .currency("EUR")
                 .build());
 
         // Ville
         City paris = cityRepository.save(City.builder()
-                .uuid(UUID.randomUUID())
+                .uuid(UUID.fromString("11111111-1111-1111-1111-111111111111"))
                 .name("Paris")
                 .postalCode("75000")
                 .country(france)
                 .build());
 
+        City lyon = cityRepository.save(City.builder()
+                .uuid(UUID.fromString("22222222-2222-2222-2222-222222222222"))
+                .name("Lyon")
+                .postalCode("69000")
+                .country(france)
+                .build());
+
+        City marseille = cityRepository.save(City.builder()
+                .uuid(UUID.fromString("33333333-3333-3333-3333-333333333333"))
+                .name("Marseille")
+                .postalCode("13000")
+                .country(france)
+                .build());
+
         // Aéroport
         Airport cdg = Airport.builder()
-                .airportId(UUID.randomUUID())
+                .airportId(UUID.fromString("11111111-1111-1111-1111-111111111111"))
                 .name("Charles de Gaulle")
                 .city(paris)
-                .country(france) // facultatif si redondant
                 .build();
 
+        // Aéroport 2
+        Airport lyonStex = Airport.builder()
+                .airportId(UUID.fromString("22222222-2222-2222-2222-222222222222"))
+                .name("Lyon Saint-Exupéry")
+                .city(lyon)
+                .build();
+
+        Airport marseilleMarignane = Airport.builder()
+                .airportId(UUID.fromString("33333333-3333-3333-3333-333333333333"))
+                .name("Marseille Provence")
+                .city(marseille)
+                .build();
+
+
         airportRepository.save(cdg);
+        airportRepository.save(lyonStex);
+        airportRepository.save(marseilleMarignane);
     }
 }

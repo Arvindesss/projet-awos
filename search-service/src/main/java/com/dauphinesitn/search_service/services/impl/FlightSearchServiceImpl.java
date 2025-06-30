@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @AllArgsConstructor
@@ -31,15 +32,15 @@ public class FlightSearchServiceImpl implements FlightSearchService {
         return flightSearchResults.stream()
                 // Filtrer par aéroports
                 .filter(flight -> flightSearchParameters.arrivalAirportId() == null ||
-                        flight.flightItineraryDTO().departureAirportId().equals(flightSearchParameters.arrivalAirportId()))
+                        flight.flightItineraryDTO().departureAirportId().equals(flightSearchParameters.departureAirportId()))
                 .filter(flight -> flightSearchParameters.departureAirportId() == null ||
-                        flight.flightItineraryDTO().arrivalAirportId().equals(flightSearchParameters.departureAirportId()))
+                        flight.flightItineraryDTO().arrivalAirportId().equals(flightSearchParameters.arrivalAirportId()))
                 // Filtrer par date
                 .filter(flight -> flightSearchParameters.departureDate() == null ||
                         flight.departureTime().toLocalDate().equals(flightSearchParameters.departureDate()))
                 // Filtrer par prix
                 .filter(flight -> flightSearchParameters.maxPrice() == null ||
-                        pricingClient.getItineraryPricingByAirportIds(itineraryPricingDTO).getBody()
+                        Objects.requireNonNull(pricingClient.getItineraryPricingByAirportIds(itineraryPricingDTO.departureAirportId(), itineraryPricingDTO.arrivalAirportId()).getBody())
                                 .price() <= flightSearchParameters.maxPrice())
                 // Enrichir
                 .map(this::buildSearchResult)
@@ -47,14 +48,15 @@ public class FlightSearchServiceImpl implements FlightSearchService {
     }
 
     private FlightSearchResult buildSearchResult(FlightDTO flight) {
-        AirportDTO arrAirport = locationClient.getAirportById(flight.flightItineraryDTO().arrivalAirportId()).getBody();
-        AirportDTO depAirport = locationClient.getAirportById(flight.flightItineraryDTO().departureAirportId()).getBody();
+        AirportDTOResponse arrAirport = locationClient.getAirportById(flight.flightItineraryDTO().arrivalAirportId()).getBody();
+        AirportDTOResponse depAirport = locationClient.getAirportById(flight.flightItineraryDTO().departureAirportId()).getBody();
 
         return FlightSearchResult.builder()
                 .flightId(flight.flightId())
                 .plane(flight.plane())
                 .departureAirport(depAirport)
                 .arrivalAirport(arrAirport)
+                .price(pricingClient.getItineraryPricingByAirportIds(depAirport.airportId(), arrAirport.airportId()).getBody().price())
                 .departureTime(flight.departureTime())
                 .arrivalTime(flight.arrivalTime())
                 .build();

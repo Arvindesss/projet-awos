@@ -1,6 +1,7 @@
 package com.dauphinesitn.location_service.service.impl;
 
 import com.dauphinesitn.location_service.dto.CityDTO;
+import com.dauphinesitn.location_service.dto.CityDTOResponse;
 import com.dauphinesitn.location_service.mapper.CountryMapper;
 import com.dauphinesitn.location_service.model.City;
 import com.dauphinesitn.location_service.model.Country;
@@ -53,11 +54,13 @@ public class CityServiceImpl implements CityService {
 
     @Override
     public City createCity(CityDTO cityDTO) {
+        Country country = countryRepository.findById(cityDTO.countryId())
+                .orElseThrow(() -> new IllegalArgumentException("Country not found with id: " + cityDTO.countryId()));
         City city = City.builder()
                 .uuid(UUID.randomUUID())
                 .name(cityDTO.name())
                 .postalCode(cityDTO.postalCode())
-                .country(CountryMapper.toEntity(cityDTO.country()))
+                .country(country)
                 .build();
         return cityRepository.save(city);
     }

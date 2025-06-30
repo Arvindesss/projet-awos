@@ -18,7 +18,7 @@ public class DataInitializer {
     @PostConstruct
     public void init() {
         Payment p1 = Payment.builder()
-                .paymentId(UUID.randomUUID())
+                .paymentId(UUID.fromString("11111111-1111-1111-1111-111111111111"))
                 .customerId(UUID.fromString("11111111-1111-1111-1111-111111111111"))
                 .description("Paiement réservation vol ABC123")
                 .amount(120.0)
@@ -27,12 +27,12 @@ public class DataInitializer {
                 .build();
 
         Payment p2 = Payment.builder()
-                .paymentId(UUID.randomUUID())
+                .paymentId(UUID.fromString("22222222-2222-2222-2222-222222222222"))
                 .customerId(UUID.fromString("22222222-2222-2222-2222-222222222222"))
                 .description("Paiement réservation vol XYZ789")
                 .amount(250.0)
                 .currency("EUR")
-                .paymentDate(LocalDateTime.now())
+                .paymentDate(LocalDateTime.of(2024, 10, 1, 12, 0))
                 .build();
 
         paymentRepository.save(p1);

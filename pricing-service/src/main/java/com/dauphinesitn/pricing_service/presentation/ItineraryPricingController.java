@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/v1/itinerary-pricing")
+@RequestMapping("/v1/itinerary-pricings")
 @AllArgsConstructor
 public class ItineraryPricingController {
 
@@ -31,8 +31,14 @@ public class ItineraryPricingController {
     }
 
     @GetMapping("/airport-ids")
-    public ResponseEntity<ItineraryPricingDTO> getItineraryPricingByAirportIds(@RequestBody ItineraryPricingDTO itineraryPricingDTO) {
-        ItineraryPricing itineraryPricing = itineraryPricingService.getItineraryPricingByAirportIds(itineraryPricingDTO.arrivalAirportId(), itineraryPricingDTO.departureAirportId());
+    public ResponseEntity<ItineraryPricingDTO> getItineraryPricingByAirportIds(@RequestParam UUID departureAirportId,
+                                                                               @RequestParam UUID arrivalAirportId) {
+        ItineraryPricingDTO itineraryPricingDTO = ItineraryPricingDTO.builder()
+                .departureAirportId(departureAirportId)
+                .arrivalAirportId(arrivalAirportId)
+                .build();
+        ItineraryPricing itineraryPricing = itineraryPricingService.getItineraryPricingByAirportIds(itineraryPricingDTO.arrivalAirportId(),
+                itineraryPricingDTO.departureAirportId());
         return ResponseEntity.ok(ItineraryPricingMapper.toDTO(itineraryPricing));
     }
 

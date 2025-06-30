@@ -8,8 +8,9 @@ import java.util.UUID;
 @Builder
 public record FlightSearchResult(UUID flightId,
                                 PlaneDTO plane,
-                                AirportDTO departureAirport,
-                                AirportDTO arrivalAirport,
+                                AirportDTOResponse departureAirport,
+                                AirportDTOResponse arrivalAirport,
+                                double price,
                                 LocalDateTime departureTime,
                                 LocalDateTime arrivalTime) {
 

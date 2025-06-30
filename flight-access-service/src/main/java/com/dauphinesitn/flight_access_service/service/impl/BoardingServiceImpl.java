@@ -13,6 +13,7 @@ import com.dauphinesitn.flight_access_service.service.BoardingService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -50,7 +51,7 @@ public class BoardingServiceImpl implements BoardingService {
                 .customerId(customer.customerId())
                 .reservationId(reservation.reservationId())
                 .checkIn(checkIn)
-                .boardingTime(boardingDTO.boardingTime())
+                .boardingTime(LocalDateTime.now())
                 .build();
         return boardingRepository.save(boarding);
     }

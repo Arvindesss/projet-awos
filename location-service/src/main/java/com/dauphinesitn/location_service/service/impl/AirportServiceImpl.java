@@ -11,6 +11,7 @@ import com.dauphinesitn.location_service.service.AirportService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -23,7 +24,10 @@ public class AirportServiceImpl implements AirportService {
 
     private final CityRepository cityRepository;
 
-
+    @Override
+    public List<Airport> getAllAirports() {
+        return airportRepository.findAll();
+    }
 
     @Override
     public Airport getAirportById(UUID id) {
@@ -41,13 +45,10 @@ public class AirportServiceImpl implements AirportService {
     public Airport createAirport(AirportDTO airport) {
         City city = cityRepository.findById(airport.cityId())
                 .orElseThrow(() -> new IllegalArgumentException("City not found with id: " + airport.cityId()));
-        Country country = countryRepository.findById(airport.countryId())
-                .orElseThrow(() -> new IllegalArgumentException("Country not found with id: " + city.getCountry().getUuid()));
         Airport newAirport = Airport.builder()
                 .airportId(UUID.randomUUID())
                 .name(airport.name())
                 .city(city)
-                .country(country)
                 .build();
         return airportRepository.save(newAirport);
     }
@@ -58,11 +59,8 @@ public class AirportServiceImpl implements AirportService {
                 .orElseThrow(() -> new IllegalArgumentException("Airport not found with id: " + id));
         City city = cityRepository.findById(airport.cityId())
                 .orElseThrow(() -> new IllegalArgumentException("City not found with id: " + airport.cityId()));
-        Country country = countryRepository.findById(airport.countryId())
-                .orElseThrow(() -> new IllegalArgumentException("Country not found with id: " + city.getCountry().getUuid()));
         existingAirport.setName(airport.name());
         existingAirport.setCity(city);
-        existingAirport.setCountry(country);
         return airportRepository.save(existingAirport);
     }
 

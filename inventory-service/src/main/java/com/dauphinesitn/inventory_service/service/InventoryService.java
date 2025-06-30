@@ -14,9 +14,9 @@ public interface InventoryService {
 
     Inventory getInventoryByFlightId(UUID flightId);
 
-    Inventory updateSeatAvailability(UUID flightId, SeatInventoryDTO inventory);
+    Inventory updateSeatAvailability(SeatInventoryDTO inventory);
 
-    Inventory createInventory(InventoryDTO inventory);
+    Inventory createInventory(UUID flightId);
 
     Inventory deleteInventory(UUID flightId);
 }

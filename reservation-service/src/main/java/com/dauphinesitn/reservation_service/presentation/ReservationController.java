@@ -20,7 +20,7 @@ public class ReservationController {
 
     private final ReservationService reservationService;
 
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity<List<ReservationDTO>> getAllReservations() {
         List<Reservation> reservations = reservationService.getAllReservations();
         return ResponseEntity.ok(ReservationMapper.toDto(reservations));
@@ -45,10 +45,9 @@ public class ReservationController {
         return ResponseEntity.ok(ReservationMapper.toDto(updatedReservation));
     }
 
-    @PatchMapping("/update-status/{reservationId}")
-    public ResponseEntity<ReservationDTO> updateReservationStatus(@PathVariable UUID reservationId,
-                                                                  @RequestBody UpdateReservationStatusRequestBody requestBody) {
-        Reservation updatedReservation = reservationService.updateReservationStatus(reservationId, requestBody.status());
+    @PutMapping("/update-status")
+    public ResponseEntity<ReservationDTO> updateReservationStatus(@RequestBody UpdateReservationStatusRequestBody requestBody) {
+        Reservation updatedReservation = reservationService.updateReservationStatus(requestBody.reservationId(), requestBody.status());
         return ResponseEntity.ok(ReservationMapper.toDto(updatedReservation));
     }
 

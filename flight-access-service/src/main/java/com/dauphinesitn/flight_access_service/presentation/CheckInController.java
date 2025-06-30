@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,7 +34,8 @@ public class CheckInController {
     @PostMapping("/create")
     public ResponseEntity<CheckInDTO> createCheckIn(@RequestBody CheckInDTO checkInDTO) {
         CheckIn createdCheckIn = checkInService.createCheckIn(checkInDTO);
-        return ResponseEntity.ok(CheckInMapper.toDTO(createdCheckIn));
+        return ResponseEntity.created(URI.create("/v1/check-ins/" + createdCheckIn.getCheckInId()))
+                .body(CheckInMapper.toDTO(createdCheckIn));
     }
 
     @DeleteMapping("/{id}")

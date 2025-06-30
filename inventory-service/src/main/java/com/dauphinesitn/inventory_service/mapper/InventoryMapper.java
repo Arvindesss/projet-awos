@@ -25,6 +25,7 @@ public class InventoryMapper {
     public static InventoryAvailabilityDTO toAvailabilityDto(Inventory inventory) {
         return InventoryAvailabilityDTO.builder()
                 .flightId(inventory.getFlightId())
+                .seatInventory(SeatInventoryMapper.toDto(inventory.getSeatInventory()))
                 .availableSeats(
                         inventory.getSeatInventory() == null ? 0 :
                                 (int) inventory.getSeatInventory().stream()

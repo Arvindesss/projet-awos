@@ -11,6 +11,6 @@ import java.util.List;
 @FeignClient(name = "payment-service")
 public interface PaymentClient {
 
-    @GetMapping("/api/payments")
+    @GetMapping("/v1/payments")
     ResponseEntity<List<PaymentDTO>> getAllPayments(@RequestParam(required = false) int year); // This method should return a list of payments in JSON format or a DTO, adjust as necessary.
 }

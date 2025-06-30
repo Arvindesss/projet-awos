@@ -22,7 +22,7 @@ public class PricingDataInitializer {
 
         // Exemple d'ajout de tarifs pour des itinéraires
         ItineraryPricing pricingCdgOrly = ItineraryPricing.builder()
-                .itineraryPricingId(UUID.randomUUID())
+                .itineraryPricingId(UUID.fromString("11111111-1111-1111-1111-111111111111"))
                 .departureAirportId(cdgAirportId)
                 .arrivalAirportId(orlyAirportId)
                 .price(50.0)
@@ -30,7 +30,7 @@ public class PricingDataInitializer {
                 .build();
 
         ItineraryPricing pricingOrlyCdg = ItineraryPricing.builder()
-                .itineraryPricingId(UUID.randomUUID())
+                .itineraryPricingId(UUID.fromString("22222222-2222-2222-2222-222222222222"))
                 .departureAirportId(orlyAirportId)
                 .arrivalAirportId(cdgAirportId)
                 .price(45.0)

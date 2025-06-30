@@ -29,12 +29,12 @@ public class FlightAccessDataInitializer {
     @PostConstruct
     public void init() {
         // Création du CheckIn
-        UUID checkInId = UUID.fromString("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
+        UUID checkInId = UUID.fromString("11111111-1111-1111-1111-111111111111");
         CheckIn checkIn = CheckIn.builder()
                 .checkInId(checkInId)
-                .cardId(UUID.fromString("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"))
-                .customerId(UUID.fromString("cccccccc-cccc-cccc-cccc-cccccccccccc"))
-                .reservationId(UUID.fromString("dddddddd-dddd-dddd-dddd-dddddddddddd"))
+                .cardId(UUID.fromString("11111111-1111-1111-1111-111111111111"))
+                .customerId(UUID.fromString("11111111-1111-1111-1111-111111111111"))
+                .reservationId(UUID.fromString("11111111-1111-1111-1111-111111111111"))
                 .seatNumber("14B")
                 .checkInTime(LocalDateTime.now().minusHours(2))
                 .build();
@@ -43,14 +43,14 @@ public class FlightAccessDataInitializer {
 
         // Création des bagages liés au CheckIn
         CheckInLuggage luggage1 = CheckInLuggage.builder()
-                .luggageId(UUID.fromString("eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee"))
+                .luggageId(UUID.fromString("11111111-1111-1111-1111-111111111111"))
                 .checkIn(checkIn)
                 .height(30.0)
                 .weight(7.5)
                 .build();
 
         CheckInLuggage luggage2 = CheckInLuggage.builder()
-                .luggageId(UUID.fromString("ffffffff-ffff-ffff-ffff-ffffffffffff"))
+                .luggageId(UUID.fromString("22222222-2222-2222-2222-222222222222"))
                 .checkIn(checkIn)
                 .height(45.0)
                 .weight(12.0)
@@ -65,10 +65,10 @@ public class FlightAccessDataInitializer {
 
         // Création du Boarding lié au CheckIn
         Boarding boarding = Boarding.builder()
-                .boardingId(UUID.fromString("99999999-9999-9999-9999-999999999999"))
-                .cardId(UUID.fromString("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"))  // même cardId que checkIn
-                .customerId(UUID.fromString("cccccccc-cccc-cccc-cccc-cccccccccccc")) // même customerId que checkIn
-                .reservationId(UUID.fromString("dddddddd-dddd-dddd-dddd-dddddddddddd")) // même reservationId que checkIn
+                .boardingId(UUID.fromString("11111111-1111-1111-1111-111111111111"))
+                .cardId(UUID.fromString("11111111-1111-1111-1111-111111111111"))  // même cardId que checkIn
+                .customerId(UUID.fromString("11111111-1111-1111-1111-111111111111")) // même customerId que checkIn
+                .reservationId(UUID.fromString("11111111-1111-1111-1111-111111111111")) // même reservationId que checkIn
                 .checkIn(checkIn)
                 .boardingTime(LocalDateTime.now().minusMinutes(30))
                 .build();

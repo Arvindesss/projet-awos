@@ -14,6 +14,7 @@ public class PaymentMapper {
                 .description(payment.getDescription())
                 .amount(payment.getAmount())
                 .currency(payment.getCurrency())
+                .paymentDate(payment.getPaymentDate())
                 .build();
     }
 

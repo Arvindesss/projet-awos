@@ -11,7 +11,7 @@ public record CheckInDTO (UUID checkInId,
                           UUID cardId,
                           UUID customerId,
                           UUID reservationId,
-                          UUID seatInventoryId,
+                          String seatNumber,
                           LocalDateTime checkInTime,
                           List<CheckInLuggageDTO> luggages) {
 }

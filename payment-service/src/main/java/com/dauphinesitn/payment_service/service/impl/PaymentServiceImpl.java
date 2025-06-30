@@ -10,6 +10,7 @@ import com.dauphinesitn.payment_service.service.PaymentService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,22 +39,42 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public Payment payReservation(PaymentDTO paymentDTO, UUID reservationId) {
+    public Payment payReservation(UUID reservationId, PaymentDTO paymentDTO) {
         //Check if reservation exists
-        reservationClient.getReservationById(reservationId).getBody();
-
+       ReservationDTO reservationDTO = reservationClient.getReservationById(reservationId).getBody();
+       validatePayment(paymentDTO, reservationDTO);
         //Create payment
         Payment newPayment = Payment.builder()
                 .paymentId(UUID.randomUUID())
                 .customerId(paymentDTO.customerId())
                 .description("Payment for reservation " + reservationId)
                 .amount(paymentDTO.amount())
+                .currency(paymentDTO.currency())
+                .paymentDate(LocalDateTime.now())
                 .build();
 
-        reservationClient.updateReservationStatus(reservationId, UpdateReservationStatusRequestBody.builder()
+        reservationClient.updateReservationStatus(UpdateReservationStatusRequestBody.builder()
+                .reservationId(reservationId)
                 .status(ReservationDTO.Status.CONFIRMED)
                 .build());
 
         return paymentRepository.save(newPayment);
+    }
+
+    private static void validatePayment(PaymentDTO paymentDTO, ReservationDTO reservationDTO) {
+        //Check if customerId matches
+        if (!reservationDTO.customerId().equals(paymentDTO.customerId())) {
+            throw new RuntimeException("Customer ID does not match the reservation's customer ID.");
+        }
+
+        //Check if reservation is in a valid state for payment
+        if( reservationDTO.status() != ReservationDTO.Status.PENDING) {
+            throw new RuntimeException("Reservation is not in a valid state for payment.");
+        }
+
+        //Check if payment amount matches reservation price
+        if(reservationDTO.price() !=  paymentDTO.amount()) {
+            throw new RuntimeException("Payment price is invalid.");
+        }
     }
 }

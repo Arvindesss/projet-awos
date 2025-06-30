@@ -1,12 +1,9 @@
 package com.dauphinesitn.flight_service.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -21,10 +18,15 @@ public class Flight {
     @Id
     private UUID flightId;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "plane_id", nullable = false)
     private Plane plane;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumns({
+            @JoinColumn(name = "departure_airport_id", referencedColumnName = "departureAirportId"),
+            @JoinColumn(name = "arrival_airport_id", referencedColumnName = "arrivalAirportId")
+    })
     private FlightItinerary flightItinerary;
 
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm")

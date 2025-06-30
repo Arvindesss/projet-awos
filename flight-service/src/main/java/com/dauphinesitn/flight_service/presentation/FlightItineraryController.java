@@ -1,5 +1,6 @@
 package com.dauphinesitn.flight_service.presentation;
 
+import com.dauphinesitn.flight_service.dto.FlightItineraryCompleteDTO;
 import com.dauphinesitn.flight_service.dto.FlightItineraryDTO;
 import com.dauphinesitn.flight_service.dto.converter.FlightItineraryToFlightItineraryDTOConverter;
 import com.dauphinesitn.flight_service.model.FlightItinerary;
@@ -8,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,22 +20,23 @@ public class FlightItineraryController {
 
     private final FlightItineraryService flightItineraryService;
 
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity<List<FlightItineraryDTO>> getAllFlightItineraries() {
         List<FlightItinerary> flightItineraries = flightItineraryService.getAllFlightItineraries();
         return ResponseEntity.ok(FlightItineraryToFlightItineraryDTOConverter.convert(flightItineraries));
     }
 
     @GetMapping("/get-by-id")
-    public ResponseEntity<FlightItineraryDTO> getFlightItineraryById(@RequestParam UUID departureAirportId, @RequestParam UUID arrivalAirportId) {
-        FlightItinerary flightItinerary = flightItineraryService.getFlightItineraryById(departureAirportId, arrivalAirportId);
-        return ResponseEntity.ok(FlightItineraryToFlightItineraryDTOConverter.convert(flightItinerary));
+    public ResponseEntity<FlightItineraryCompleteDTO> getFlightItineraryById(@RequestBody FlightItineraryDTO flightItineraryDTO) {
+        FlightItineraryCompleteDTO flightItinerary = flightItineraryService.getFlightItineraryById(flightItineraryDTO);
+        return ResponseEntity.ok(flightItinerary);
     }
 
     @PostMapping("/create")
     public ResponseEntity<FlightItineraryDTO> createFlightItinerary(@RequestBody FlightItineraryDTO flightItineraryDTO) {
         FlightItinerary flightItinerary = flightItineraryService.createFlightItinerary(flightItineraryDTO);
-        return ResponseEntity.ok(FlightItineraryToFlightItineraryDTOConverter.convert(flightItinerary));
+        return ResponseEntity.created(URI.create("/v1/itineraries/" + flightItinerary.getFlightItineraryId()))
+                .body((FlightItineraryToFlightItineraryDTOConverter.convert(flightItinerary)));
     }
 
     @DeleteMapping("/delete/{flightItineraryId}")

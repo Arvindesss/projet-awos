@@ -14,7 +14,7 @@ public interface PaymentService {
 
     Payment getPaymentById(UUID id);
 
-    Payment payReservation(PaymentDTO paymentDTO, UUID reservationId);
+    Payment payReservation(UUID reservationId, PaymentDTO paymentDTO);
 }
 
 

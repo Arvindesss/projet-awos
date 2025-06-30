@@ -1,5 +1,7 @@
 package com.dauphinesitn.pricing_service.service.impl;
 
+import com.dauphinesitn.pricing_service.client.AirportClient;
+import com.dauphinesitn.pricing_service.dto.AirportDTOResponse;
 import com.dauphinesitn.pricing_service.dto.ItineraryPricingDTO;
 import com.dauphinesitn.pricing_service.model.ItineraryPricing;
 import com.dauphinesitn.pricing_service.repository.ItineraryPricingRepository;
@@ -16,6 +18,8 @@ public class ItineraryPricingServiceImpl implements ItineraryPricingService {
 
     private final ItineraryPricingRepository itineraryPricingRepository;
 
+    private final AirportClient airportClient;
+
     @Override
     public List<ItineraryPricing> getAllItineraryPricings() {
         return itineraryPricingRepository.findAll();
@@ -23,7 +27,8 @@ public class ItineraryPricingServiceImpl implements ItineraryPricingService {
 
     @Override
     public ItineraryPricing getItineraryPricingById(UUID id) {
-        return itineraryPricingRepository.findById(id).orElse(null);
+        return itineraryPricingRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Itinerary Pricing not found with ID: " + id));
+
     }
 
     @Override
@@ -34,11 +39,14 @@ public class ItineraryPricingServiceImpl implements ItineraryPricingService {
 
     @Override
     public ItineraryPricing createItineraryPricing(ItineraryPricingDTO itineraryPricing) {
+        AirportDTOResponse departureAirport = airportClient.getAirportById(itineraryPricing.departureAirportId()).getBody();
+        AirportDTOResponse arrivalAirport = airportClient.getAirportById(itineraryPricing.arrivalAirportId()).getBody();
         ItineraryPricing newItineraryPricing = ItineraryPricing.builder()
                 .itineraryPricingId(UUID.randomUUID())
                 .departureAirportId(itineraryPricing.departureAirportId())
                 .arrivalAirportId(itineraryPricing.arrivalAirportId())
                 .price(itineraryPricing.price())
+                .currency(itineraryPricing.currency())
                 .build();
         return itineraryPricingRepository.save(newItineraryPricing);
     }

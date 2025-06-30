@@ -18,6 +18,6 @@ public class Seat {
 
     @MapsId("planeId") // map avionId dans SeatId
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "planeId")
+    @JoinColumn(name = "plane_id", nullable = false)
     private Plane plane;
 }

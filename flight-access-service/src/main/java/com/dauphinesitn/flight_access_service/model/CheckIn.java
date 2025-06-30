@@ -1,9 +1,7 @@
 package com.dauphinesitn.flight_access_service.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -26,11 +24,12 @@ public class CheckIn {
 
     private UUID customerId;
 
+    @Column(unique = true)
     private UUID reservationId;
 
     private String seatNumber;
 
-    @OneToMany(mappedBy = "checkIn")
+    @OneToMany(mappedBy = "checkIn", cascade = CascadeType.ALL)
     private List<CheckInLuggage> luggages;
 
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm")

@@ -5,9 +5,10 @@ import lombok.Builder;
 import java.util.UUID;
 
 @Builder
-public record CustomerDTO(UUID uuid,
+public record CustomerDTO(UUID customerId,
                           String firstname,
                           String surname,
-                          String email) {
+                          String email,
+                          CardDTO cardId) {
 
 }

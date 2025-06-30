@@ -1,5 +1,6 @@
 package com.dauphinesitn.flight_service.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -23,7 +24,7 @@ public class Plane {
 
     private String manufacturer;
 
-    @OneToMany(mappedBy = "plane")
+    @OneToMany(mappedBy = "plane", cascade = CascadeType.ALL)
     private List<Seat> seats;
 
     private int maxCapacity;

@@ -11,6 +11,7 @@ public class PlaneToPlaneDTOConverter {
                 .planeId(plane.getPlaneId())
                 .model(plane.getModel())
                 .manufacturer(plane.getManufacturer())
+                .seats(SeatToSeatDTOConverter.convert(plane.getSeats()))
                 .maxCapacity(plane.getMaxCapacity())
                 .maxBaggageWeight(plane.getMaxBaggageWeight())
                 .build();

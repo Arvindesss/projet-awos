@@ -8,5 +8,5 @@ import java.util.UUID;
 public record CityDTO(UUID uuid,
                       String name,
                       String postalCode,
-                      CountryDTO country) {
+                      UUID countryId) {
 }

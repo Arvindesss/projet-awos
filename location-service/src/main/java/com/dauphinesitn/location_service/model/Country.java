@@ -1,5 +1,6 @@
 package com.dauphinesitn.location_service.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.*;
@@ -17,6 +18,7 @@ public class Country {
     @Id
     private UUID uuid;
 
+    @Column(unique = true)
     private String name;
 
     private String currency;

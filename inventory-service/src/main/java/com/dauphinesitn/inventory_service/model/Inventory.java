@@ -1,5 +1,6 @@
 package com.dauphinesitn.inventory_service.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -19,6 +20,6 @@ public class Inventory {
     @Id
     private UUID flightId;
 
-    @OneToMany
+    @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SeatInventory> seatInventory;
 }

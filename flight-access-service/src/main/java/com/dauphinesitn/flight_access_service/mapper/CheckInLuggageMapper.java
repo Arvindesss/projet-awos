@@ -10,6 +10,7 @@ public class CheckInLuggageMapper {
     public static CheckInLuggageDTO toDTO(CheckInLuggage checkInLuggage) {
         return CheckInLuggageDTO.builder()
                 .luggageId(checkInLuggage.getLuggageId())
+                .height(checkInLuggage.getHeight())
                 .weight(checkInLuggage.getWeight())
                 .build();
     }

@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,7 +34,8 @@ public class BoardingController {
     @PostMapping("/create")
     public ResponseEntity<BoardingDTO> createBoarding(@RequestBody BoardingDTO checkInDTO) {
         Boarding createdBoarding = boardingService.createBoarding(checkInDTO);
-        return ResponseEntity.ok(BoardingMapper.toDTO(createdBoarding));
+        return ResponseEntity.created(URI.create("/v1/boardings/" + createdBoarding.getBoardingId()))
+                .body(BoardingMapper.toDTO(createdBoarding));
     }
 
     @DeleteMapping("/{id}")

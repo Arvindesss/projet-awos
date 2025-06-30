@@ -1,4 +1,4 @@
-package com.dauphinesitn.search_service.dto;
+package com.dauphinesitn.pricing_service.dto;
 
 import lombok.Builder;
 
@@ -8,5 +8,5 @@ import java.util.UUID;
 public record CityDTO(UUID uuid,
                       String name,
                       String postalCode,
-                      CountryDTO country) {
+                      UUID countryId) {
 }

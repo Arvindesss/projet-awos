@@ -53,23 +53,22 @@ public class ReservationServiceImpl implements ReservationService {
 
         // Update the seat inventory to mark the seat as reserved
         SeatInventoryDTO seatInventoryDTO = SeatInventoryDTO.builder()
+                .flightId(reservationDTO.flightId())
                 .seatNumber(reservationDTO.seatNumber())
                 .isAvailable(false)
                 .build();
-        inventoryClient.updateSeatAvailability(inventory.flightId(), seatInventoryDTO);
+        inventoryClient.updateSeatAvailability(seatInventoryDTO);
 
         // Calculate the price of the reservation using the pricing service
-        ItineraryPricingDTO itineraryPricing = pricingClient.getItineraryPricingByAirportIds(
-                ItineraryPricingDTO.builder()
-                        .departureAirportId(flight.flightItineraryDTO().departureAirportId())
-                        .arrivalAirportId(flight.flightItineraryDTO().arrivalAirportId())
-                        .build()).getBody();
+        ItineraryPricingDTO itineraryPricing = pricingClient.getItineraryPricingByAirportIds(flight.flightItineraryDTO().departureAirportId(),
+                        flight.flightItineraryDTO().arrivalAirportId()).getBody();
 
         Reservation newReservation = Reservation.builder()
                 .reservationId(UUID.randomUUID())
                 .customerId(reservationDTO.customerId())
                 .flightId(reservationDTO.flightId())
                 .price(itineraryPricing.price())
+                .currency(reservationDTO.currency())
                 .reservedSeatNumber(reservationDTO.seatNumber())
                 .status(Reservation.Status.PENDING)
                 .build();

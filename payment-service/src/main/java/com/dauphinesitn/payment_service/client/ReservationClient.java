@@ -4,10 +4,7 @@ import com.dauphinesitn.payment_service.dto.ReservationDTO;
 import com.dauphinesitn.payment_service.dto.queryparam.UpdateReservationStatusRequestBody;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -17,7 +14,6 @@ public interface ReservationClient {
     @GetMapping("/v1/reservations/{reservationId}")
     ResponseEntity<ReservationDTO> getReservationById(@PathVariable UUID reservationId);
 
-    @PatchMapping("/v1/reservations/update-status/{reservationId}")
-    ResponseEntity<ReservationDTO> updateReservationStatus(@PathVariable UUID reservationId,
-                                                           @RequestBody UpdateReservationStatusRequestBody requestBody);
+    @PutMapping("/v1/reservations/update-status")
+    ResponseEntity<ReservationDTO> updateReservationStatus(@RequestBody UpdateReservationStatusRequestBody requestBody);
 }

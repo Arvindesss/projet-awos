@@ -47,7 +47,7 @@ public class CheckInServiceImpl implements CheckInService {
             throw new RuntimeException("Cannot create check-in for a reservation that is not confirmed.");
         }
         String seatNumber = reservation.seatNumber();
-        if(seatNumber.isEmpty() || seatNumber.isBlank()) {
+        if(seatNumber == null || seatNumber.isBlank()) {
             SeatingDTO seatingDTO = SeatingDTO.builder()
                     .flightId(reservation.flightId())
                     .customerId(checkIn.customerId())

@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,7 +20,7 @@ public class FlightController {
     private final FlightService flightService;
 
 
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity<List<FlightDTO>> getAllFlights() {
         List<Flight> flights = flightService.getAllFlights();
         return ResponseEntity.ok(FlightToFlightDTOConverter.convert(flights));
@@ -34,7 +35,8 @@ public class FlightController {
     @PostMapping("/create")
     public ResponseEntity<FlightDTO> createFlight(@RequestBody FlightDTO flightDTO) {
         Flight flight = flightService.createFlight(flightDTO);
-        return ResponseEntity.ok(FlightToFlightDTOConverter.convert(flight));
+        return ResponseEntity.created(URI.create("/v1/flights/" + flight.getFlightId()))
+                .body(FlightToFlightDTOConverter.convert(flight));
     }
 
     @PutMapping("/update/{flightId}")

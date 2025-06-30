@@ -3,6 +3,7 @@ package com.dauphinesitn.flight_access_service.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import lombok.*;
 
@@ -28,6 +29,7 @@ public class Boarding {
     private UUID reservationId;
 
     @OneToOne
+    @JoinColumn(name = "check_in_id")
     private CheckIn checkIn;
 
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm")

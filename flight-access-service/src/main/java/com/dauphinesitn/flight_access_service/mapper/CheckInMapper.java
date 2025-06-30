@@ -11,8 +11,10 @@ public class CheckInMapper {
     public static CheckInDTO toDTO(CheckIn checkIn) {
         return CheckInDTO.builder()
                 .checkInId(checkIn.getCheckInId())
+                .cardId(checkIn.getCardId())
                 .customerId(checkIn.getCustomerId())
                 .reservationId(checkIn.getReservationId())
+                .seatNumber(checkIn.getSeatNumber())
                 .luggages(CheckInLuggageMapper.toDTO(checkIn.getLuggages()))
                 .checkInTime(checkIn.getCheckInTime())
                 .build();

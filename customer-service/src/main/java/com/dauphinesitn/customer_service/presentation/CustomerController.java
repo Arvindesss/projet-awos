@@ -44,14 +44,14 @@ public class CustomerController {
     @PostMapping("/create")
     public ResponseEntity<CustomerDTO> createCustomer(@RequestBody CustomerDTO customerDTO) {
         Customer customer = customerService.createCustomer(customerDTO);
-        return ResponseEntity.created(URI.create("/v1/customers/" + customer.getUuid()))
+        return ResponseEntity.created(URI.create("/v1/customers/" + customer.getCustomerId()))
                 .body(CustomerToCustomerDTOConverter.convert(customer));
     }
 
     @PutMapping("/update")
     public ResponseEntity<CustomerDTO> updateCustomer(@RequestBody CustomerDTO customerDTO) {
         Customer customer = customerService.updateCustomer(customerDTO);
-        return ResponseEntity.created(URI.create("/v1/customers/" + customer.getUuid()))
+        return ResponseEntity.created(URI.create("/v1/customers/" + customer.getCustomerId()))
                 .body(CustomerToCustomerDTOConverter.convert(customer));
     }
 

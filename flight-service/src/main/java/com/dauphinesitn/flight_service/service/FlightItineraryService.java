@@ -1,5 +1,6 @@
 package com.dauphinesitn.flight_service.service;
 
+import com.dauphinesitn.flight_service.dto.FlightItineraryCompleteDTO;
 import com.dauphinesitn.flight_service.dto.FlightItineraryDTO;
 import com.dauphinesitn.flight_service.model.FlightItinerary;
 
@@ -10,7 +11,7 @@ public interface FlightItineraryService {
 
     List<FlightItinerary> getAllFlightItineraries();
 
-    FlightItinerary getFlightItineraryById(UUID departureAirportId, UUID arrivalAirportId);
+    FlightItineraryCompleteDTO getFlightItineraryById(FlightItineraryDTO flightItinerary);
 
     FlightItinerary createFlightItinerary(FlightItineraryDTO flightItinerary);
 

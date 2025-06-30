@@ -49,8 +49,7 @@ public class FlightServiceImpl implements FlightService {
         Plane plane = planeRepository
                 .findById(flightDTO.plane().planeId())
                 .orElseThrow(() -> new IllegalArgumentException("Plane not found with ID: " + flightDTO.plane().planeId()));
-        Flight flight = Flight.builder()
-                .flightId(UUID.randomUUID())
+        Flight flight = Flight.builder().flightId(UUID.randomUUID())
                 .flightItinerary(flightItinerary)
                 .arrivalTime(flightDTO.arrivalTime())
                 .departureTime(flightDTO.departureTime())

@@ -3,7 +3,6 @@ package com.dauphinesitn.customer_service.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -15,7 +14,7 @@ import java.util.UUID;
 public class Customer {
 
     @Id
-    private UUID uuid;
+    private UUID customerId;
 
     private String firstname;
 

@@ -24,6 +24,16 @@ public class InventoryDataInitializer {
         // UUID du vol existant (doit correspondre à celui défini dans FlightDataInitializer)
         UUID flightId = UUID.fromString("11111111-1111-1111-1111-111111111111");
 
+
+
+
+
+        // Création de l’Inventory
+        Inventory inventory = Inventory.builder()
+                .flightId(flightId)
+                .build();
+
+
         // Création des SeatInventory
         List<SeatInventory> seatInventories = IntStream.rangeClosed(1, 30)
                 .boxed()
@@ -31,17 +41,14 @@ public class InventoryDataInitializer {
                         .map(letter -> SeatInventory.builder()
                                 .seatInventoryId(new SeatInventoryId(flightId, row + letter))
                                 .isAvailable(true)
+                                .inventory(inventory)
                                 .build()))
                 .collect(Collectors.toList());
 
-        seatInventoryRepository.saveAll(seatInventories);
-
-        // Création de l’Inventory
-        Inventory inventory = Inventory.builder()
-                .flightId(flightId)
-                .seatInventory(seatInventories)
-                .build();
+        inventory.setSeatInventory(seatInventories);
 
         inventoryRepository.save(inventory);
+        seatInventoryRepository.saveAll(seatInventories);
+
     }
 }

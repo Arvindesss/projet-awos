@@ -1,6 +1,5 @@
 package com.dauphinesitn.location_service.repository;
 
-import com.dauphinesitn.location_service.dto.CityDTO;
 import com.dauphinesitn.location_service.model.City;
 import com.dauphinesitn.location_service.model.Country;
 import org.springframework.data.jpa.repository.JpaRepository;

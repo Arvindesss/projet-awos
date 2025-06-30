@@ -1,16 +1,16 @@
 package com.dauphinesitn.location_service.presentation;
 
 import com.dauphinesitn.location_service.dto.AirportDTO;
+import com.dauphinesitn.location_service.dto.AirportDTOResponse;
 import com.dauphinesitn.location_service.mapper.AirportMapper;
 import com.dauphinesitn.location_service.model.Airport;
 import com.dauphinesitn.location_service.service.AirportService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -20,34 +20,41 @@ public class AirportController {
 
     private final AirportService airportService;
 
-    @RequestMapping("/{id}")
-    public ResponseEntity<AirportDTO> getAirportById(@PathVariable UUID id) {
-        Airport airport = airportService.getAirportById(id);
-        return ResponseEntity.ok(AirportMapper.toDTO(airport));
-    }
-    @RequestMapping("/{name}")
-    public ResponseEntity<AirportDTO> getAirportByName(@PathVariable String name) {
-        Airport airport = airportService.getAirportByName(name);
-        return ResponseEntity.ok(AirportMapper.toDTO(airport));
+    @GetMapping("")
+    public ResponseEntity<List<AirportDTOResponse>> getAllAirports() {
+        List<Airport> airport = airportService.getAllAirports();
+        return ResponseEntity.ok(AirportMapper.toDTOResponse(airport));
     }
 
-    @RequestMapping("/create")
-    public ResponseEntity<AirportDTO> createAirport(AirportDTO airportDTO) {
+    @GetMapping("/{id}")
+    public ResponseEntity<AirportDTOResponse> getAirportById(@PathVariable UUID id) {
+        Airport airport = airportService.getAirportById(id);
+        return ResponseEntity.ok(AirportMapper.toDTOResponse(airport));
+    }
+
+    @GetMapping("/name")
+    public ResponseEntity<AirportDTOResponse> getAirportByName(@RequestParam String airportName) {
+        Airport airport = airportService.getAirportByName(airportName);
+        return ResponseEntity.ok(AirportMapper.toDTOResponse(airport));
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<AirportDTOResponse> createAirport(@RequestBody AirportDTO airportDTO) {
         Airport airport = airportService.createAirport(airportDTO);
         return ResponseEntity.created(URI.create("/v1/airports/" + airport.getAirportId()))
-                .body(AirportMapper.toDTO(airport));
+                .body(AirportMapper.toDTOResponse(airport));
     }
 
-    @RequestMapping("/update")
-    public ResponseEntity<AirportDTO> updateAirport(@PathVariable UUID id, AirportDTO airportDTO) {
+    @PutMapping("/update")
+    public ResponseEntity<AirportDTOResponse> updateAirport(@PathVariable UUID id, AirportDTO airportDTO) {
         Airport airport = airportService.updateAirport(id, airportDTO);
         return ResponseEntity.created(URI.create("/v1/airports/" + airport.getAirportId()))
-                .body(AirportMapper.toDTO(airport));
+                .body(AirportMapper.toDTOResponse(airport));
     }
 
-    @RequestMapping("/delete/{id}")
-    public ResponseEntity<AirportDTO> deleteAirport(@PathVariable UUID id) {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<AirportDTOResponse> deleteAirport(@PathVariable UUID id) {
         Airport airport = airportService.deleteAirport(id);
-        return ResponseEntity.ok(AirportMapper.toDTO(airport));
+        return ResponseEntity.ok(AirportMapper.toDTOResponse(airport));
     }
 }

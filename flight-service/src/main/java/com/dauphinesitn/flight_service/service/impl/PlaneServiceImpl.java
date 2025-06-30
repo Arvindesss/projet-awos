@@ -31,20 +31,22 @@ public class PlaneServiceImpl implements PlaneService {
 
     @Override
     public Plane createPlane(PlaneDTO planeDTO) {
-        List<Seat> seats = planeDTO.seats().stream()
-                .map(seatDTO -> Seat.builder()
-                        .seatId(new SeatId(planeDTO.planeId(), seatDTO.seatNumber()))
-                        .description(seatDTO.description())
-                        .build())
-                .toList();
+        UUID planeId = UUID.randomUUID();
         Plane newPlane = Plane.builder()
-                .planeId(UUID.randomUUID())
+                .planeId(planeId)
                 .model(planeDTO.model())
                 .manufacturer(planeDTO.manufacturer())
-                .seats(seats)
-                .maxCapacity(seats.size())
                 .maxBaggageWeight(planeDTO.maxBaggageWeight())
                 .build();
+        List<Seat> seats = planeDTO.seats().stream()
+                .map(seatDTO -> Seat.builder()
+                        .seatId(new SeatId(planeId, seatDTO.seatNumber()))
+                        .description(seatDTO.description())
+                        .plane(newPlane)
+                        .build())
+                .toList();
+        newPlane.setSeats(seats);
+        newPlane.setMaxCapacity(seats.size());
         return planeRepository.save(newPlane);
     }
 

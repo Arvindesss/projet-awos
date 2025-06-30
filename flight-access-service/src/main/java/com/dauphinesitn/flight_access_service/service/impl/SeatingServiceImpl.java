@@ -1,16 +1,12 @@
 package com.dauphinesitn.flight_access_service.service.impl;
 
 import com.dauphinesitn.flight_access_service.client.InventoryClient;
-import com.dauphinesitn.flight_access_service.client.ReservationClient;
 import com.dauphinesitn.flight_access_service.dto.InventoryDTO;
 import com.dauphinesitn.flight_access_service.dto.SeatInventoryDTO;
 import com.dauphinesitn.flight_access_service.dto.SeatingDTO;
-import com.dauphinesitn.flight_access_service.service.CheckInService;
 import com.dauphinesitn.flight_access_service.service.SeatingService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
 
 @Service
 @AllArgsConstructor

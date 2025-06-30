@@ -39,17 +39,22 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer createCustomer(CustomerDTO customerDTO) {
         Customer customer = Customer.builder()
-                .uuid(UUID.randomUUID())
+                .customerId(UUID.randomUUID())
                 .firstname(customerDTO.firstname())
                 .surname(customerDTO.surname())
                 .email(customerDTO.email())
                 .build();
+        CardId cardId = CardId.builder()
+                .cardId(customerDTO.cardId().cardId())
+                .customer(customer)
+                .build();
+        customer.setCardId(cardId);
         return customerRepository.save(customer);
     }
 
     @Override
     public Customer updateCustomer(CustomerDTO customerDTO) {
-        Customer customer = customerRepository.findById(customerDTO.uuid())
+        Customer customer = customerRepository.findById(customerDTO.customerId())
                 .orElseThrow(() -> new IllegalArgumentException("Customer not found"));
         customer.setFirstname(customerDTO.firstname());
         customer.setSurname(customerDTO.surname());
