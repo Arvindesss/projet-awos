@@ -6,11 +6,18 @@ import lombok.*;
 import java.util.UUID;
 
 @Entity
+@Table(
+        name = "reservation",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"customerId", "flightId"})
+        }
+)
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class Reservation {
 
     @Id

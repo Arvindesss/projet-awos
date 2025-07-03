@@ -1,6 +1,7 @@
 package com.dauphinesitn.search_service.services.impl;
 
 import com.dauphinesitn.search_service.client.FlightClient;
+import com.dauphinesitn.search_service.client.InventoryClient;
 import com.dauphinesitn.search_service.client.LocationClient;
 import com.dauphinesitn.search_service.client.PricingClient;
 import com.dauphinesitn.search_service.dto.*;
@@ -20,6 +21,8 @@ public class FlightSearchServiceImpl implements FlightSearchService {
     private PricingClient pricingClient;
 
     private LocationClient locationClient;
+
+    private InventoryClient inventoryClient;
 
     @Override
     public List<FlightSearchResult> searchFlights(FlightSearchParameters flightSearchParameters) {
@@ -42,6 +45,10 @@ public class FlightSearchServiceImpl implements FlightSearchService {
                 .filter(flight -> flightSearchParameters.maxPrice() == null ||
                         Objects.requireNonNull(pricingClient.getItineraryPricingByAirportIds(itineraryPricingDTO.departureAirportId(), itineraryPricingDTO.arrivalAirportId()).getBody())
                                 .price() <= flightSearchParameters.maxPrice())
+
+                //Filtrer par disponibilité
+                .filter(flight -> inventoryClient.getInventoryByFlightId(flight.flightId()).getBody().seatInventory().stream()
+                                .anyMatch(SeatInventoryDTO::isAvailable))
                 // Enrichir
                 .map(this::buildSearchResult)
                 .toList();

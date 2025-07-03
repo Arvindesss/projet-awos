@@ -20,9 +20,9 @@ public class FlightSearchController {
     private FlightSearchService flightSearchService;
 
     @GetMapping("")
-    public ResponseEntity<List<FlightSearchResult>> searchFlights(@RequestParam UUID departureAirportId,
-                                                                  @RequestParam UUID arrivalAirportId,
-                                                                  @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate departureDate,
+    public ResponseEntity<List<FlightSearchResult>> searchFlights(@RequestParam(required = false) UUID departureAirportId,
+                                                                  @RequestParam(required = false) UUID arrivalAirportId,
+                                                                  @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate departureDate,
                                                                   @RequestParam(required = false) Double maxPrice) {
         FlightSearchParameters flightSearchParameters = FlightSearchParameters.builder()
                 .departureAirportId(departureAirportId)

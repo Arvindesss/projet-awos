@@ -18,22 +18,22 @@ public class PricingDataInitializer {
     public void init() {
         // UUIDs d'aéroport déjà créés dans le service location
         UUID cdgAirportId = UUID.fromString("11111111-1111-1111-1111-111111111111"); // remplace par le vrai UUID de CDG
-        UUID orlyAirportId = UUID.fromString("22222222-2222-2222-2222-222222222222"); // autre exemple, Orly
+        UUID lyonAirportId = UUID.fromString("22222222-2222-2222-2222-222222222222"); // autre exemple, Orly
 
         // Exemple d'ajout de tarifs pour des itinéraires
         ItineraryPricing pricingCdgOrly = ItineraryPricing.builder()
                 .itineraryPricingId(UUID.fromString("11111111-1111-1111-1111-111111111111"))
                 .departureAirportId(cdgAirportId)
-                .arrivalAirportId(orlyAirportId)
+                .arrivalAirportId(lyonAirportId)
                 .price(50.0)
                 .currency("EUR")
                 .build();
 
         ItineraryPricing pricingOrlyCdg = ItineraryPricing.builder()
                 .itineraryPricingId(UUID.fromString("22222222-2222-2222-2222-222222222222"))
-                .departureAirportId(orlyAirportId)
+                .departureAirportId(lyonAirportId)
                 .arrivalAirportId(cdgAirportId)
-                .price(45.0)
+                .price(60.0)
                 .currency("EUR")
                 .build();
 

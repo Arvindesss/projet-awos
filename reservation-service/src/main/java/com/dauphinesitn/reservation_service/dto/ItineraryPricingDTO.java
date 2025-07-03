@@ -8,5 +8,6 @@ import java.util.UUID;
 public record ItineraryPricingDTO(UUID itineraryPricingId,
                                   UUID departureAirportId,
                                   UUID arrivalAirportId,
-                                  double price) {
+                                  double price,
+                                  String currency) {
 }

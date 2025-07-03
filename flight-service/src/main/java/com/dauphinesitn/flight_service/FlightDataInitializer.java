@@ -67,10 +67,10 @@ public class FlightDataInitializer {
         seatRepository.saveAll(seats);
 
         // 3. Création d’un itinéraire de vol
-        UUID departureAirportId = UUID.fromString("11111111-1111-1111-1111-111111111111");
-        UUID arrivalAirportId = UUID.fromString("22222222-2222-2222-2222-222222222222");
+        UUID cdgAirportId = UUID.fromString("11111111-1111-1111-1111-111111111111");
+        UUID lyonAirportId = UUID.fromString("22222222-2222-2222-2222-222222222222");
 
-        FlightItineraryId itineraryId = new FlightItineraryId(departureAirportId, arrivalAirportId);
+        FlightItineraryId itineraryId = new FlightItineraryId(cdgAirportId, lyonAirportId);
         FlightItinerary itinerary = new FlightItinerary(itineraryId);
         flightItineraryRepository.save(itinerary);
 
@@ -82,6 +82,10 @@ public class FlightDataInitializer {
                 .departureTime(LocalDateTime.now().plusDays(2).withHour(9).withMinute(0))
                 .arrivalTime(LocalDateTime.now().plusDays(2).withHour(11).withMinute(0))
                 .build();
+
+        FlightItineraryId itineraryId2 = new FlightItineraryId(lyonAirportId, cdgAirportId);
+        FlightItinerary itinerary2 = new FlightItinerary(itineraryId2);
+        flightItineraryRepository.save(itinerary2);
 
         Flight flight2 = Flight.builder()
                 .flightId(UUID.fromString("22222222-2222-2222-2222-222222222222"))
