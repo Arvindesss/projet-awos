@@ -30,6 +30,7 @@ Configuration files are stored in a separate repository:
 - Spring Cloud
 - Spring Data JPA
 - REST APIs
+- OpenFeign
 - Maven
 - H2
 - Git
@@ -49,7 +50,6 @@ The platform is composed of several services handling different airline operatio
 | Passenger Service | Stores passenger information |
 | Check-in Service | Handles passenger check-in |
 | Payment Service | Manages payment transactions |
-| Notification Service | Sends emails or notifications |
 
 ---
 
